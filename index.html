@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alegría Navideña · Patinata · Concejo Municipal de Chacao</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* ═══ PALETA NAVIDEÑA VÍVIDA ═══ */
+  --ink:#1C0F0A;
+  --pine-deep:#0B2818;      /* verde pino profundo */
+  --maroon-deep:#33090F;    /* granate navideño */
+  --red:#E4002B;            /* ROJO NAVIDEÑO VÍVIDO */
+  --red-vivid:#FF2E4C;      /* rojo brillante */
+  --green:#0FA653;          /* VERDE NAVIDEÑO VÍVIDO */
+  --green-vivid:#17C265;    /* verde brillante */
+  --gold:#FFB300;           /* DORADO VIVO */
+  --gold-bright:#FFD84D;    /* dorado brillante */
+  --gold-pale:#FFEFC2;      /* dorado suave */
+  --snow:#FFFBF3;           /* BLANCO nieve */
+  --white:#FFFFFF;
+  --line:rgba(228,0,43,.12);
+  --shadow-lg:0 30px 80px -20px rgba(51,9,15,.28);
+  --shadow-md:0 16px 40px -12px rgba(51,9,15,.18);
+  --radius:22px;
+  --ease:cubic-bezier(.22,.8,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--snow);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--red);color:var(--white)}
+
+.progress{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,var(--red),var(--gold),var(--green));z-index:1000;transition:width .1s linear}
+.grid-lines{position:fixed;inset:0;pointer-events:none;z-index:0;max-width:1360px;margin:0 auto;padding:0 40px;display:flex;justify-content:space-between;opacity:.3}
+.grid-lines span{width:1px;background:linear-gradient(180deg,transparent,rgba(228,0,43,.05),transparent)}
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}
+
+.side-nav{position:fixed;right:26px;top:50%;transform:translateY(-50%);z-index:900;display:flex;flex-direction:column;gap:13px}
+.side-nav a{width:11px;height:11px;border-radius:50%;border:2px solid var(--red);background:transparent;transition:all .3s var(--ease);position:relative}
+.side-nav a:hover{background:var(--gold);border-color:var(--gold);transform:scale(1.3)}
+.side-nav a::after{content:attr(data-label);position:absolute;right:20px;top:50%;transform:translateY(-50%);font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--red);white-space:nowrap;opacity:0;transition:opacity .3s;pointer-events:none}
+.side-nav a:hover::after{opacity:1}
+@media(max-width:960px){.side-nav{display:none}}
+
+.img-error-msg{color:#fca5a5;font-size:11px;text-align:center;line-height:1.7;padding:12px;font-family:'Space Mono',monospace}
+.img-error-msg b{color:#fff;font-size:10px;display:block;margin:5px 0;word-break:break-all}
+.img-error-msg span{opacity:.65;font-size:9px;display:block}
+.img-error-state{background:rgba(239,68,68,.09)!important;border-color:rgba(239,68,68,.45)!important}
+
+.editable{border-bottom:1.5px dashed var(--gold-bright);cursor:text}
+
+/* ══════════ PORTADA ══════════ */
+.cover{min-height:100vh;position:relative;overflow:hidden;
+  background:radial-gradient(ellipse 80% 60% at 15% 20%,rgba(255,46,76,.18),transparent 60%),
+  radial-gradient(ellipse 70% 70% at 85% 80%,rgba(255,179,0,.16),transparent 60%),
+  linear-gradient(160deg,#230609 0%,var(--maroon-deep) 45%,#570F19 100%);
+  display:flex;flex-direction:column;color:var(--white);padding:34px clamp(24px,5vw,70px) 44px;z-index:1}
+.orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;pointer-events:none}
+.orb-1{width:420px;height:420px;background:var(--red-vivid);top:-120px;right:-80px;opacity:.2}
+.orb-2{width:320px;height:320px;background:var(--gold);bottom:-80px;left:-60px;opacity:.18}
+.snowflake{position:absolute;color:rgba(255,255,255,.16);font-size:22px;pointer-events:none;animation:drift 9s ease-in-out infinite}
+@keyframes drift{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(18px) rotate(15deg)}}
+
+.cover-top{display:flex;justify-content:space-between;align-items:center;gap:20px;border-bottom:1px solid rgba(255,255,255,.14);padding-bottom:22px;position:relative;z-index:2}
+.logo-slot{width:96px;height:96px;border-radius:18px;flex-shrink:0;border:1.5px dashed rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;text-align:center;font-family:'Space Mono',monospace;font-size:9px;line-height:1.5;color:rgba(255,255,255,.65);background:rgba(255,255,255,.04);backdrop-filter:blur(6px);transition:all .3s;overflow:hidden}
+.logo-slot:hover{border-color:var(--gold-bright);background:rgba(255,255,255,.09)}
+.logo-slot img{max-width:100%;max-height:100%;object-fit:contain;border-radius:12px}
+.cover-top-meta{flex:1;text-align:center}
+.cover-top-meta .doc-ref{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold-bright)}
+.cover-top-meta .doc-line{font-size:11px;color:rgba(255,255,255,.6);margin-top:4px}
+
+.cover-main{flex:1;display:flex;align-items:center;gap:clamp(30px,5vw,80px);position:relative;z-index:2;padding:40px 0;flex-wrap:wrap}
+.cover-text{flex:1;min-width:300px}
+.kicker{display:inline-flex;align-items:center;gap:10px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold-bright);margin-bottom:26px}
+.kicker::before{content:'';width:34px;height:1px;background:var(--gold)}
+.cover-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(38px,5.5vw,72px);line-height:1.02;letter-spacing:-1.5px}
+.cover-title em{font-family:'Playfair Display',serif;font-style:italic;font-weight:500;color:var(--gold-bright);display:block;font-size:.52em;letter-spacing:0;margin-top:14px}
+.star-icon{display:inline-block;font-size:.5em;vertical-align:middle;margin-left:.2em;animation:twinkle 2.6s infinite}
+@keyframes twinkle{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.2);opacity:.75}}
+.cover-sub{margin-top:26px;max-width:540px;color:rgba(255,255,255,.82);font-size:15px;font-weight:300}
+.cover-sub strong{color:var(--white);font-weight:600}
+
+.flyer-frame{width:min(380px,80vw);position:relative;flex-shrink:0}
+.flyer-frame::before{content:'';position:absolute;inset:-14px;border-radius:28px;border:1px solid rgba(255,255,255,.18);pointer-events:none}
+.flyer-slot{aspect-ratio:4/5;border-radius:20px;overflow:hidden;position:relative;border:1.5px dashed rgba(255,255,255,.35);background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:30px;color:rgba(255,255,255,.6);transition:all .3s}
+.flyer-slot:hover{border-color:var(--gold-bright)}
+.flyer-slot .fs-icon{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);font-size:26px}
+.flyer-slot .fs-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase}
+.flyer-slot .fs-path{font-family:'Space Mono',monospace;font-size:10px;color:var(--gold-bright)}
+.flyer-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:20px;z-index:2}
+.flyer-tag{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);background:var(--white);color:var(--maroon-deep);border-radius:100px;padding:7px 20px;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;white-space:nowrap;box-shadow:var(--shadow-md);z-index:3}
+
+.cover-bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.14);padding-top:22px;position:relative;z-index:2}
+.date-chip{display:flex;align-items:center;gap:16px;background:rgba(255,255,255,.08);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.2);border-radius:18px;padding:16px 24px}
+.date-chip .dc-icon{font-size:26px}
+.date-chip .dc-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-bright)}
+.date-chip .dc-value{font-family:'Syne',sans-serif;font-weight:700;font-size:17px}
+.cover-venue{text-align:right;font-size:12px;color:rgba(255,255,255,.7)}
+.cover-venue strong{display:block;font-family:'Syne',sans-serif;color:var(--white);font-size:15px}
+
+.cover-stats{display:flex;gap:clamp(20px,4vw,60px);margin-top:38px;flex-wrap:wrap}
+.cs-item .cs-num{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(34px,4vw,50px);line-height:1;background:linear-gradient(90deg,var(--gold-bright),var(--gold-pale));-webkit-background-clip:text;background-clip:text;color:transparent}
+.cs-item .cs-label{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.75);margin-top:8px}
+.cs-item .cs-est{font-size:9px;color:rgba(255,255,255,.5);font-style:italic}
+
+/* ══════════ ÍNDICE ══════════ */
+.toc{padding:clamp(70px,9vw,130px) clamp(24px,6vw,90px);position:relative;z-index:1;background:var(--snow)}
+.toc-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:56px}
+.section-kicker{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:12px}
+.section-kicker::before{content:'';width:10px;height:10px;border-radius:50%;background:var(--gold)}
+.toc-head h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(32px,4.5vw,56px);letter-spacing:-1px}
+.toc-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0;border-top:1px solid var(--line)}
+.toc-item{display:flex;gap:20px;align-items:baseline;padding:26px 8px;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink);transition:all .35s var(--ease);position:relative}
+.toc-item:hover{padding-left:20px;background:linear-gradient(90deg,var(--gold-pale),transparent)}
+.toc-num{font-family:'Space Mono',monospace;font-weight:700;font-size:14px;color:var(--red);min-width:34px}
+.toc-item h3{font-family:'Syne',sans-serif;font-weight:700;font-size:17px;letter-spacing:-.3px}
+.toc-item p{font-size:12.5px;color:#7a5a4e;margin-top:4px;font-weight:300}
+.toc-arrow{margin-left:auto;color:var(--red);opacity:0;transition:all .35s;transform:translateX(-6px)}
+.toc-item:hover .toc-arrow{opacity:1;transform:none}
+
+/* ══════════ SECCIONES ══════════ */
+.section{padding:clamp(70px,9vw,130px) clamp(24px,6vw,90px);position:relative;z-index:1}
+.section--white{background:var(--white)}
+.section--cream{background:var(--snow)}
+.section--dark{background:linear-gradient(150deg,#160409,var(--maroon-deep) 55%,#570F19);color:var(--white)}
+.section--pine{background:linear-gradient(150deg,#08170D,var(--pine-deep) 55%,#1C5227);color:var(--white)}
+.section-head{max-width:820px;margin-bottom:clamp(40px,5vw,70px)}
+.section-head h2{font-family:'Syne',sans-serif;font-weight:800;letter-spacing:-1px;font-size:clamp(30px,4.2vw,52px);line-height:1.05;margin-top:18px}
+.section-head h2 em{font-family:'Playfair Display',serif;font-style:italic;font-weight:500;color:var(--red)}
+.section--dark .section-head h2 em,.section--pine .section-head h2 em{color:var(--gold-bright)}
+.section-lead{margin-top:20px;font-size:16px;color:#7a5a4e;max-width:640px;font-weight:300}
+.section--dark .section-lead,.section--pine .section-lead{color:rgba(255,255,255,.78)}
+.watermark{position:absolute;top:30px;right:20px;font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(140px,22vw,300px);line-height:1;color:transparent;-webkit-text-stroke:1.5px rgba(228,0,43,.08);pointer-events:none;user-select:none;z-index:0}
+.section--dark .watermark,.section--pine .watermark{-webkit-text-stroke:1.5px rgba(255,255,255,.06)}
+
+.split{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(40px,6vw,90px);align-items:start;position:relative;z-index:1}
+@media(max-width:880px){.split{grid-template-columns:1fr}}
+.prose p{margin-bottom:18px;font-size:15.5px;color:#5a4038}
+.prose p:first-of-type::first-letter{font-family:'Playfair Display',serif;font-size:64px;float:left;line-height:.85;padding:6px 12px 0 0;color:var(--red);font-weight:600}
+.prose strong{color:var(--maroon-deep);font-weight:600}
+.mv-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow-lg);padding:34px;border:1px solid var(--line);border-top:5px solid var(--red);margin-bottom:22px}
+.mv-card h4{font-family:'Syne',sans-serif;font-weight:700;font-size:17px;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.mv-card p{font-size:13.5px;color:#7a5a4e;font-weight:300}
+.space-banner{margin-top:34px;background:linear-gradient(120deg,var(--red),var(--green));border-radius:18px;padding:26px 30px;color:var(--white);display:flex;gap:16px;align-items:center}
+.space-banner .sb-icon{font-size:30px}
+.space-banner p{font-size:14px;font-weight:500}
+.space-banner p strong{color:var(--gold-pale)}
+
+/* Estaciones */
+.specialties{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:20px;position:relative;z-index:1}
+.spec-card{background:var(--white);border-radius:18px;padding:32px 26px;border:1px solid var(--line);border-left:4px solid var(--red);transition:all .4s var(--ease);text-align:center}
+.spec-card:nth-child(2n){border-left-color:var(--green)}
+.spec-card:nth-child(3n){border-left-color:var(--gold)}
+.spec-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
+.spec-card .sp-icon{font-size:38px;margin-bottom:14px}
+.spec-card h4{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;margin-bottom:6px}
+.spec-card p{font-size:12px;color:#7a5a4e;font-weight:300}
+.spec-card .sp-count{display:inline-block;margin-top:10px;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--red);background:var(--gold-pale);padding:4px 12px;border-radius:100px}
+
+/* Contexto */
+.context-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(40px,6vw,80px);position:relative;z-index:1}
+@media(max-width:880px){.context-grid{grid-template-columns:1fr}}
+.context-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow-lg);padding:clamp(30px,4vw,50px);border:1px solid var(--line)}
+.context-card .cc-tag{display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:20px}
+.context-card .cc-tag::before{content:'';width:9px;height:9px;border-radius:50%;background:var(--gold)}
+.context-card h3{font-family:'Syne',sans-serif;font-weight:700;font-size:22px;margin-bottom:16px;letter-spacing:-.4px}
+.context-card p{font-size:14.5px;color:#5a4038;margin-bottom:16px}
+.context-card p strong{color:var(--maroon-deep)}
+.context-list{display:flex;flex-direction:column;gap:16px}
+.context-item{display:flex;gap:18px;align-items:flex-start;background:var(--white);border-radius:18px;padding:22px 24px;border:1px solid var(--line);transition:all .35s var(--ease)}
+.context-item:hover{transform:translateX(8px);border-color:var(--gold-pale);box-shadow:var(--shadow-md)}
+.context-icon{width:46px;height:46px;min-width:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:21px;background:linear-gradient(135deg,var(--gold-pale),#FFD6DB)}
+.context-item h4{font-family:'Syne',sans-serif;font-weight:700;font-size:15.5px;margin-bottom:5px}
+.context-item p{font-size:12.5px;color:#7a5a4e;font-weight:300}
+.context-note{margin-top:24px;padding:18px 22px;background:var(--gold-pale);border-radius:14px;font-size:12px;color:#8a5a10;border-left:3px solid var(--gold)}
+
+.quote-block{margin-top:60px;background:linear-gradient(135deg,var(--red),var(--red-vivid));border-radius:var(--radius);padding:clamp(36px,5vw,60px);position:relative;overflow:hidden;z-index:1}
+.quote-block::before{content:'"';position:absolute;top:-30px;left:20px;font-family:'Playfair Display',serif;font-size:260px;color:rgba(255,255,255,.12);line-height:1}
+.quote-block blockquote{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(19px,2.4vw,27px);line-height:1.55;color:var(--white);position:relative;z-index:1;max-width:820px}
+.quote-block cite{display:block;margin-top:22px;font-family:'Space Mono',monospace;font-style:normal;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-pale)}
+
+/* Valores */
+.values{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:26px;position:relative;z-index:1}
+.value-card{border-radius:var(--radius);padding:40px 32px;position:relative;overflow:hidden;background:var(--white);border:1px solid var(--line);transition:all .4s var(--ease)}
+.value-card::after{content:'';position:absolute;bottom:-40px;right:-40px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,var(--gold-pale),transparent 70%);opacity:0;transition:opacity .4s}
+.value-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg)}
+.value-card:hover::after{opacity:1}
+.value-card .v-icon{width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:24px;background:linear-gradient(135deg,var(--red),var(--gold));margin-bottom:20px}
+.value-card h4{font-family:'Syne',sans-serif;font-weight:700;font-size:18px;margin-bottom:10px}
+.value-card p{font-size:13px;color:#7a5a4e;font-weight:300}
+.value-card--featured{background:linear-gradient(150deg,var(--maroon-deep),var(--red));color:var(--white);grid-column:span 2}
+.value-card--featured p{color:rgba(255,255,255,.85)}
+.value-card--featured h4{color:var(--white)}
+@media(max-width:640px){.value-card--featured{grid-column:span 1}}
+
+/* Fases */
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0;position:relative;z-index:1;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg)}
+.phase{background:var(--white);padding:44px 34px;position:relative;border-right:1px solid var(--line);transition:all .4s var(--ease)}
+.phase:last-child{border-right:none}
+.phase:hover{background:linear-gradient(160deg,var(--gold-pale),var(--white))}
+.phase .ph-num{font-family:'Syne',sans-serif;font-weight:800;font-size:52px;line-height:1;color:transparent;-webkit-text-stroke:1.5px var(--red)}
+.phase h4{font-family:'Syne',sans-serif;font-weight:700;font-size:19px;margin:18px 0 12px}
+.phase p{font-size:13px;color:#7a5a4e;font-weight:300}
+.phase .ph-line{width:40px;height:3px;background:linear-gradient(90deg,var(--red),var(--gold));border-radius:2px;margin-top:20px}
+
+/* Agenda */
+.agenda{position:relative;z-index:1;max-width:860px}
+.agenda-item{display:grid;grid-template-columns:120px 1fr;gap:26px;align-items:flex-start;padding:26px 0;border-bottom:1px solid var(--line);position:relative}
+.agenda-item::before{content:'';position:absolute;left:133px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--gold-pale),transparent)}
+.agenda-time{font-family:'Space Mono',monospace;font-weight:700;font-size:13px;color:var(--red);padding-top:4px;text-align:right}
+.agenda-body{position:relative;padding-left:26px}
+.agenda-body::before{content:'';position:absolute;left:-6px;top:8px;width:12px;height:12px;border-radius:50%;background:var(--white);border:3px solid var(--red);box-shadow:0 0 0 4px var(--gold-pale)}
+.agenda-body h4{font-family:'Syne',sans-serif;font-weight:700;font-size:17px;margin-bottom:6px}
+.agenda-body p{font-size:13.5px;color:#7a5a4e;font-weight:300;max-width:600px}
+@media(max-width:640px){.agenda-item{grid-template-columns:1fr;gap:10px}.agenda-time{text-align:left}.agenda-item::before{display:none}}
+
+/* Galería */
+.gallery{position:relative;z-index:1}
+.gallery-grid{display:grid;gap:20px}
+.gallery-grid--3{grid-template-columns:1.4fr 1fr;grid-template-rows:280px 280px}
+.gallery-grid--3 .g-item:first-child{grid-row:1/3}
+.gallery-grid--2{grid-template-columns:1fr 1fr;grid-template-rows:360px}
+.gallery-grid--1{grid-template-columns:1fr;grid-template-rows:460px;max-width:760px;margin:0 auto}
+.g-item{border-radius:20px;overflow:hidden;position:relative;border:1.5px dashed rgba(255,255,255,.4);background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.03));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:rgba(255,255,255,.65);transition:all .35s var(--ease)}
+.g-item:hover{border-color:var(--gold-bright);background:rgba(255,255,255,.09)}
+.g-item img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.g-item:hover img{transform:scale(1.04)}
+.gallery-help{margin-top:30px;padding:20px 26px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);font-family:'Space Mono',monospace;font-size:11px;line-height:2;color:rgba(255,255,255,.75)}
+.gallery-help b{color:var(--gold-bright)}
+@media(max-width:720px){.gallery-grid--3,.gallery-grid--2{grid-template-columns:1fr;grid-template-rows:auto}.gallery-grid--3 .g-item,.gallery-grid--2 .g-item,.gallery-grid--1 .g-item{min-height:260px;grid-row:auto}}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:26px;position:relative;z-index:1}
+.stat{text-align:center;padding:44px 26px;border-radius:var(--radius);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(8px);transition:all .4s var(--ease)}
+.stat:hover{transform:translateY(-6px);border-color:var(--gold-bright);background:rgba(255,255,255,.09)}
+.stat .s-num{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(38px,4.5vw,54px);background:linear-gradient(90deg,var(--gold-bright),var(--gold-pale));-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1}
+.stat .s-label{margin-top:12px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.7)}
+.stat .s-est{font-size:9px;color:rgba(255,255,255,.5);font-style:italic;margin-top:4px}
+
+/* Métodos de participación */
+.methods{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:26px;position:relative;z-index:1}
+.method{background:var(--white);border-radius:var(--radius);padding:44px 34px;border:1px solid var(--line);text-align:center;position:relative;overflow:hidden;transition:all .4s var(--ease)}
+.method:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg)}
+.method::before{content:'';position:absolute;top:0;left:0;width:100%;height:6px;background:linear-gradient(90deg,var(--red),var(--gold))}
+.method .m-icon{width:74px;height:74px;margin:0 auto 22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;background:linear-gradient(135deg,var(--gold-pale),#FFD6DB);box-shadow:0 10px 30px -10px rgba(228,0,43,.3)}
+.method h4{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;margin-bottom:12px;letter-spacing:-.4px}
+.method p{font-size:13.5px;color:#7a5a4e;font-weight:300}
+.method .m-tag{display:inline-block;margin-top:18px;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);background:var(--gold-pale);padding:6px 14px;border-radius:100px}
+
+/* Alianzas */
+.alliance{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:26px;position:relative;z-index:1}
+.alliance-card{background:var(--white);border-radius:var(--radius);padding:38px 34px;border:1px solid var(--line);position:relative;overflow:hidden;transition:all .4s var(--ease)}
+.alliance-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:5px;background:linear-gradient(90deg,var(--red),var(--gold));transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+.alliance-card:hover{transform:translateY(-7px);box-shadow:var(--shadow-lg)}
+.alliance-card:hover::before{transform:scaleX(1)}
+.alliance-card .a-icon{font-size:30px;margin-bottom:18px}
+.alliance-card h4{font-family:'Syne',sans-serif;font-weight:700;font-size:18px;margin-bottom:10px}
+.alliance-card p{font-size:13px;color:#7a5a4e;font-weight:300}
+.alliance-card .a-type{display:inline-block;margin-top:18px;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);background:var(--gold-pale);padding:5px 14px;border-radius:100px}
+
+/* Beneficios */
+.benefits{position:relative;z-index:1;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+.benefit{padding:30px 28px;border-radius:18px;background:var(--white);border:1px solid var(--line);display:flex;gap:18px;align-items:flex-start;transition:all .35s var(--ease)}
+.benefit:hover{transform:translateY(-5px);box-shadow:var(--shadow-md);border-color:var(--gold-pale)}
+.benefit .b-dot{width:14px;height:14px;min-width:14px;border-radius:50%;margin-top:5px;background:var(--gold);box-shadow:0 0 0 5px var(--gold-pale)}
+.benefit:nth-child(2n) .b-dot{background:var(--red);box-shadow:0 0 0 5px #FFD6DB}
+.benefit:nth-child(3n) .b-dot{background:var(--green);box-shadow:0 0 0 5px #CCF2D6}
+.benefit h4{font-family:'Syne',sans-serif;font-weight:700;font-size:15.5px;margin-bottom:6px}
+.benefit p{font-size:12.5px;color:#7a5a4e;font-weight:300}
+.benefit--featured{background:linear-gradient(140deg,var(--maroon-deep),var(--red));border:none;color:var(--white)}
+.benefit--featured h4{color:var(--white)}
+.benefit--featured p{color:rgba(255,255,255,.85)}
+
+/* Protocolo */
+.protocol{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;position:relative;z-index:1}
+.proto-card{background:var(--white);border-radius:18px;padding:30px;border:1px solid var(--line);border-left:5px solid var(--red);transition:all .35s var(--ease)}
+.proto-card:nth-child(2n){border-left-color:var(--green)}
+.proto-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
+.proto-card .pc-num{font-family:'Space Mono',monospace;font-weight:700;color:var(--red);font-size:13px}
+.proto-card h4{font-family:'Syne',sans-serif;font-weight:700;font-size:17px;margin:10px 0 8px}
+.proto-card p{font-size:13px;color:#7a5a4e;font-weight:300}
+.proto-alert{margin-top:30px;background:var(--gold-pale);border-radius:16px;padding:22px 28px;display:flex;gap:16px;align-items:center;border-left:5px solid var(--gold)}
+.proto-alert .pa-icon{font-size:26px}
+.proto-alert p{font-size:13.5px;color:#6a4a10}
+
+/* Agradecimiento */
+.thanks{max-width:820px;margin:0 auto;text-align:center;position:relative;z-index:1}
+.thanks .t-icon{width:70px;height:70px;border-radius:50%;margin:0 auto 34px;background:linear-gradient(135deg,var(--red),var(--gold));display:flex;align-items:center;justify-content:center;font-size:32px;box-shadow:0 12px 40px rgba(228,0,43,.35);animation:twinkle 3s infinite}
+.thanks h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(30px,4vw,46px);letter-spacing:-1px}
+.thanks .t-sub{font-family:'Playfair Display',serif;font-style:italic;color:var(--red);font-size:20px;margin:12px 0 34px}
+.thanks p{font-size:15.5px;color:#5a4038;margin-bottom:20px;text-align:center}
+.thanks p strong{color:var(--maroon-deep)}
+.thanks-sign{margin-top:48px;padding-top:34px;border-top:1px solid var(--line)}
+.thanks-sign .ts-name{font-family:'Playfair Display',serif;font-weight:600;font-size:20px;color:var(--maroon-deep)}
+.thanks-sign .ts-role{font-size:13px;color:#7a5a4e;margin-top:4px}
+.thanks-sign .ts-org{margin-top:10px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--red)}
+
+/* Contacto */
+.contact{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;position:relative;z-index:1;max-width:900px;margin:0 auto}
+.contact-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:28px;text-align:center;backdrop-filter:blur(6px);transition:all .35s var(--ease)}
+.contact-card:hover{border-color:var(--gold-bright);transform:translateY(-5px)}
+.contact-card .cc-icon{font-size:28px;margin-bottom:12px}
+.contact-card .cc-label{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-bright);margin-bottom:8px}
+.contact-card .cc-value{font-size:14px;font-weight:600;color:var(--white);word-break:break-word}
+
+/* Contraportada */
+.back-cover{background:linear-gradient(160deg,#230609,var(--maroon-deep));color:var(--white);padding:clamp(70px,9vw,120px) clamp(24px,6vw,90px);text-align:center;position:relative;overflow:hidden;z-index:1}
+.back-cover h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(26px,4vw,44px);letter-spacing:-1px;max-width:760px;margin:0 auto;position:relative;z-index:1}
+.back-cover h2 em{font-family:'Playfair Display',serif;font-style:italic;font-weight:500;color:var(--gold-bright)}
+.back-cover .bc-phrase{margin-top:26px;font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(16px,2vw,20px);color:rgba(255,255,255,.85);position:relative;z-index:1}
+.back-cover .bc-logos{display:flex;justify-content:center;gap:26px;margin-top:56px;position:relative;z-index:1;flex-wrap:wrap}
+.back-cover .logo-slot{border-color:rgba(255,255,255,.3)}
+.back-cover .bc-org{margin-top:44px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold-bright);position:relative;z-index:1;line-height:2}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="grid-lines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+
+<!-- Copos decorativos en portada -->
+<div class="snowflake" style="top:12%;left:6%;">❄</div>
+<div class="snowflake" style="top:28%;left:88%;animation-delay:1.5s;">❄</div>
+<div class="snowflake" style="top:60%;left:4%;animation-delay:3s;font-size:16px;">❄</div>
+<div class="snowflake" style="top:78%;left:92%;animation-delay:2s;font-size:18px;">❄</div>
+<div class="snowflake" style="top:8%;left:48%;animation-delay:4s;font-size:15px;">❄</div>
+
+<nav class="side-nav" aria-label="Índice del dossier">
+  <a href="#portada" data-label="Portada"></a>
+  <a href="#resumen" data-label="Resumen"></a>
+  <a href="#contexto" data-label="Navidad"></a>
+  <a href="#valores" data-label="Valores"></a>
+  <a href="#estaciones" data-label="Estaciones"></a>
+  <a href="#agenda" data-label="Programa"></a>
+  <a href="#galeria" data-label="Galería"></a>
+  <a href="#impacto" data-label="Impacto"></a>
+  <a href="#participacion" data-label="Participación"></a>
+  <a href="#alianza" data-label="Alianza"></a>
+  <a href="#beneficios" data-label="Beneficios"></a>
+  <a href="#protocolo" data-label="Protocolo"></a>
+  <a href="#agradecimiento" data-label="Cierre"></a>
+</nav>
+
+<!-- ═══════════════════ PORTADA ═══════════════════ -->
+<section class="cover" id="portada">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="cover-top">
+    <div class="logo-slot">
+      <img data-base="assets/logo-1" alt="Comisión de Participación Ciudadana">
+    </div>
+    <div class="cover-top-meta">
+      <div class="doc-ref">Dossier Institucional · Navidad · CPC-2026</div>
+      <div class="doc-line">Concejo Municipal de Chacao · Comisión Permanente de Participación Ciudadana</div>
+    </div>
+    <div class="logo-slot">
+      <img data-base="assets/logo-2" alt="Despacho de la Concejal Yolanda Rivas">
+    </div>
+  </div>
+
+  <div class="cover-main">
+    <div class="cover-text">
+      <div class="kicker">Patinata Navideña</div>
+      <h1 class="cover-title">
+        Alegría<span class="star-icon">⭐</span><br>Navideña
+        <em>Una calle entera convertida en el parque de los niños y niñas de Chacao</em>
+      </h1>
+      <p class="cover-sub">
+        Una patinata navideña donde <strong>cerramos la calle para abrirla a la alegría</strong>: solo transitan niños con sus representantes, y los aliados de la Comisión. Un circuito seguro con <strong>trampolines, colchones inflables, helados, perros calenteros, cotillones y animación en vivo</strong> en pleno corazón popular de Chacao.
+      </p>
+      <div class="cover-stats">
+        <div class="cs-item"><div class="cs-num">+400</div><div class="cs-label">Asistentes</div><div class="cs-est">*cifra estimada</div></div>
+        <div class="cs-item"><div class="cs-num">+200</div><div class="cs-label">Niños y Niñas</div><div class="cs-est">*cifra estimada</div></div>
+        <div class="cs-item"><div class="cs-num">6</div><div class="cs-label">Estaciones de Diversión</div></div>
+      </div>
+    </div>
+
+    <div class="flyer-frame">
+      <div class="flyer-slot">
+        <div class="fs-icon">🎄</div>
+        <div class="fs-label">Flyer Oficial</div>
+        <div class="fs-path">assets / flyer.[ext]</div>
+        <div style="font-size:10px;opacity:.7">Se mostrará aquí automáticamente</div>
+        <img data-base="assets/flyer" data-optional alt="Flyer oficial de Alegría Navideña">
+      </div>
+      <div class="flyer-tag">✦ Navidad Comunitaria ✦</div>
+    </div>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="date-chip">
+      <div class="dc-icon">📅</div>
+      <div>
+        <div class="dc-label">Fecha de la Patinata</div>
+        <div class="dc-value"><span class="editable">19 de Diciembre de 2026</span></div>
+      </div>
+    </div>
+    <div class="cover-venue">
+      <strong>Sector Popular <span class="editable">Bello Campo</span></strong>
+      Chacao, Estado Miranda · República Bolivariana de Venezuela
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ ÍNDICE ═══════════════════ -->
+<section class="toc" id="indice">
+  <div class="toc-head reveal">
+    <div>
+      <div class="section-kicker">Contenido del Dossier</div>
+      <h2>Índice Editorial</h2>
+    </div>
+    <div style="font-family:'Space Mono',monospace;font-size:11px;color:#8a7aa5">Alegría Navideña · 13 apartados</div>
+  </div>
+  <div class="toc-list">
+    <a class="toc-item reveal" href="#resumen"><span class="toc-num">01</span><div><h3>Resumen Ejecutivo</h3><p>Definición, justificación y la patinata como espacio de encuentro.</p></div><span class="toc-arrow">→</span></a>
+    <a class="toc-item reveal" href="#contexto"><span class="toc-num">02</span><div><h3>La Navidad como Tejido Comunitario</h3><p>Por qué regalar alegría transforma un sector.</p></div><span class="toc-arrow">→</span></a>
+    <a class="toc-item reveal" href="#valores"><span class="toc-num">03</span><div><h3>Valores y Principios</h3><p>Los fundamentos éticos de la jornada.</p></div><span class="toc-arrow">→</span></a>
+    <a class="toc-item reveal" href="#estaciones"><span class="toc-num">04</span><div><h3>Estaciones de Diversión</h3><p>Los atractivos de la patinata navideña.</p></div><span class="toc-arrow">→</span></a>
+    <a class="toc-item reveal" href="#estructura"><span class="toc-num">05</span><div><h3>Estructura General</h3><p>Fases de planificación y ejecución.</p></div><span class="toc-arrow">→</span></a>
+    <a class="toc-item reveal" href="#agenda"><span class="toc-num">06</span><div><h3>Programa de la Patinata</h3><p>Agenda detallada de la jornada.</p></div><span class="toc-arrow">→</span></a>
+    <a class="toc-item reveal" href="#galeria"><span class="toc-num">07</span><div><h3>Galería Visual</h3><p>Registro fotográfico adaptable.</p></div><span class="toc-arrow">→</span></a>
+    <a class="toc-item reveal" href="#impacto"><span class="toc-num">08</span><div><h3>Alcance e Impacto</h3><p>Cifras estimadas y proyección social.</p></div><span class="toc-arrow">→</span></a>
+    <a class="toc-item reveal" href="#participacion"><span class="toc-num">09</span><div><h3>Métodos de Participación</h3><p>Stands · Donativos · Patrocinios.</p></div><span class="toc-arrow">→</span></a>
+    <a class="toc-item reveal" href="#alianza"><span class="toc-num">10</span><div><h3>Propuesta de Alianza</h3><p>Modalidades de contribución estratégica.</p></div><span class="toc-arrow">→</span></a>
+    <a class="toc-item reveal" href="#beneficios"><span class="toc-num">11</span><div><h3>Beneficios de Marca</h3><p>Retorno y visibilidad para aliados.</p></div><span class="toc-arrow">→</span></a>
+    <a class="toc-item reveal" href="#protocolo"><span class="toc-num">12</span><div><h3>Protocolo y Logística</h3><p>Un circuito cerrado, seguro y coordinado.</p></div><span class="toc-arrow">→</span></a>
+    <a class="toc-item reveal" href="#agradecimiento"><span class="toc-num">13</span><div><h3>Palabras de la Comisión</h3><p>Agradecimiento institucional y contacto.</p></div><span class="toc-arrow">→</span></a>
+  </div>
+</section>
+
+<!-- ═══════════════════ 01 · RESUMEN EJECUTIVO ═══════════════════ -->
+<section class="section section--white" id="resumen">
+  <div class="watermark">01</div>
+  <div class="section-head reveal">
+    <div class="section-kicker">01 · Resumen Ejecutivo</div>
+    <h2>Una calle cerrada al tráfico, <em>abierta a la alegría</em></h2>
+  </div>
+  <div class="split">
+    <div class="prose reveal d1">
+      <p>La <strong>Comisión Permanente de Participación Ciudadana del Concejo Municipal de Chacao</strong>, presidida por la concejal <strong>Yolanda Rivas</strong>, presenta el presente Dossier de Alianzas Institucionales para la patinata navideña <strong>"Alegría Navideña"</strong>, una jornada de esparcimiento infantil que se desarrollará en un <strong>sector popular del municipio</strong> durante el mes de diciembre de 2026.</p>
+      <p><strong>Definición de la actividad.</strong> "Alegría Navideña" es una patinata comunitaria en la que se realiza un <strong>cierre controlado de la vía en ambos extremos del sector</strong>, creando un circuito seguro donde únicamente transitan niños acompañados de sus representantes, junto al equipo de la Comisión y los aliados. El recorrido se transforma en un parque navideño con trampolines, colchones inflables, puestos de helados y perros calenteros, entrega de cotillones y actividades lúdicas en vivo conducidas por un animador.</p>
+      <p><strong>Justificación.</strong> La Navidad es una oportunidad única para fortalecer el tejido comunitario y llevar alegría a los sectores populares, donde muchas familias no pueden costear actividades recreativas privadas para sus hijos. Esta patinata democratiza el disfrute, ofrece un espacio seguro de juego y crea recuerdos memorables en la infancia de cientos de niños y niñas de Chacao.</p>
+      <p>Más que una actividad recreativa, "Alegría Navideña" está concebida como un <strong>espacio estratégico de encuentro comunitario y articulación institucional</strong>: un punto de convergencia donde aliados del sector privado, comerciantes, fundaciones, autoridades municipales y la comunidad trabajan juntos para regalar una Navidad inolvidable.</p>
+    </div>
+    <aside class="reveal d2">
+      <div class="mv-card">
+        <h4>🎯 Misión</h4>
+        <p>Brindar una jornada de alegría, juego y sana convivencia navideña a los niños y niñas del sector popular, con estaciones recreativas, refrigerios y actividades en vivo, en un entorno seguro y totalmente cerrado al tráfico vehicular.</p>
+      </div>
+      <div class="mv-card" style="border-top-color:var(--green)">
+        <h4>🌟 Visión</h4>
+        <p>Consolidar una tradición navideña anual que fortalezca el sentido de pertenencia comunitaria, dignifique los espacios populares y posicione a Chacao como un municipio que celebra y protege a su infancia.</p>
+      </div>
+      <div class="space-banner">
+        <div class="sb-icon">🤝</div>
+        <p><strong>Espacio de articulación</strong> para aliados, comerciantes, fundaciones, autoridades y comunidad: una oportunidad de impacto social directo, visible y emotivo.</p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ═══════════════════ 02 · CONTEXTO ═══════════════════ -->
+<section class="section section--cream" id="contexto">
+  <div class="watermark">02</div>
+  <div class="section-head reveal">
+    <div class="section-kicker">02 · La Navidad como Tejido Comunitario</div>
+    <h2>Regalar alegría es <em>construir comunidad</em></h2>
+  </div>
+  <div class="context-grid">
+    <div class="context-card reveal d1">
+      <span class="cc-tag">Marco de acción</span>
+      <h3>¿Por qué una patinata navideña en un sector popular?</h3>
+      <p>La Navidad es una época cargada de simbolismo, encuentro y esperanza. Sin embargo, en muchos sectores populares, las familias enfrentan limitaciones económicas que reducen las oportunidades de recreación y celebración para sus hijos. Una patinata comunitaria <strong>democratiza la alegría</strong> y convierte el espacio público en un lugar de encuentro seguro y festivo.</p>
+      <p>Al cerrar la calle al tráfico y entregarla a los niños, la Comisión envía un mensaje poderoso: <strong>la infancia es prioridad y el espacio público es de la comunidad</strong>. Esta apropiación temporal de la vía fortalece el sentido de pertenencia, fomenta la convivencia entre vecinos y crea memorias colectivas que perduran.</p>
+      <p>La patinata integra estaciones recreativas (trampolines, colchones inflables), alimentación (perros calenteros, helados), entrega de cotillones y <strong>animación en vivo</strong>, garantizando un flujo continuo de diversión para los niños mientras los representantes comparten en un ambiente navideño.</p>
+      <p>Además, la actividad articula a comerciantes locales, fundaciones y empresas privadas que, a través de sus aportes, se convierten en <strong>aliados visibles de la alegría comunitaria</strong>.</p>
+      <div class="context-note">📋 <b>Nota para el equipo:</b> confirmar el nombre exacto del sector popular y las calles a cerrar antes de la entrega final.</div>
+    </div>
+    <div class="context-list">
+      <div class="context-item reveal"><div class="context-icon">🎄</div><div><h4>Espíritu navideño</h4><p>Llevar la celebración de la Navidad directamente a los sectores populares del municipio.</p></div></div>
+      <div class="context-item reveal d1"><div class="context-icon">🛼</div><div><h4>Juego y movimiento</h4><p>Una patinata que combina actividad física, diversión y sana competencia entre los niños.</p></div></div>
+      <div class="context-item reveal d2"><div class="context-icon">🎁</div><div><h4>Cotillones y sorpresas</h4><p>Entrega de cotillones navideños que llenan de emoción a cada niño participante.</p></div></div>
+      <div class="context-item reveal d3"><div class="context-icon">🚧</div><div><h4>Seguridad garantizada</h4><p>Cierre controlado de la vía en ambos extremos, con acceso exclusivo para niños y sus representantes.</p></div></div>
+      <div class="context-item reveal d3"><div class="context-icon">🤝</div><div><h4>Encuentro vecinal</h4><p>Un espacio para que las familias del sector compartan, se conozcan y celebren juntas.</p></div></div>
+    </div>
+  </div>
+  <div class="quote-block reveal">
+    <blockquote>La mejor manera de hacer que los niños sean buenos es hacerlos felices. Una calle cerrada al tráfico y abierta a la alegría es el mejor regalo de Navidad que una comunidad puede darle a su infancia.</blockquote>
+    <cite>— Comisión Permanente de Participación Ciudadana · Concejo Municipal de Chacao</cite>
+  </div>
+</section>
+
+<!-- ═══════════════════ 03 · VALORES ═══════════════════ -->
+<section class="section section--white" id="valores">
+  <div class="watermark">03</div>
+  <div class="section-head reveal">
+    <div class="section-kicker">03 · Valores y Principios Fundamentales</div>
+    <h2>Los fundamentos <em>éticos</em> de la patinata</h2>
+  </div>
+  <div class="values">
+    <div class="value-card value-card--featured reveal">
+      <div class="v-icon">🎁</div>
+      <h4>La Alegría como Derecho de la Infancia</h4>
+      <p>Garantizar que todos los niños y niñas, <strong style="color:var(--gold-pale)">independientemente de su condición socioeconómica</strong>, tengan acceso a recreación de calidad, juego seguro y celebración navideña. La alegría no es un lujo: es un derecho que fortalece el desarrollo emocional y la autoestima de la infancia.</p>
+    </div>
+    <div class="value-card reveal d1"><div class="v-icon">🏘️</div><h4>Equidad Territorial</h4><p>Llevar la celebración navideña y la recreación directamente a los sectores populares, descentralizando el disfrute y dignificando estos espacios.</p></div>
+    <div class="value-card reveal d2"><div class="v-icon">🛡️</div><h4>Seguridad y Protección</h4><p>Garantizar un circuito cerrado y controlado donde los niños jueguen libres de riesgo vehicular, siempre acompañados de sus representantes.</p></div>
+    <div class="value-card reveal d3"><div class="v-icon">🤝</div><h4>Cohesión y Convivencia</h4><p>Promover el encuentro vecinal pacífico y la participación activa como herramientas de tejido social y sentido de pertenencia.</p></div>
+    <div class="value-card reveal d3"><div class="v-icon">🔍</div><h4>Transparencia y Cooperación</h4><p>Construir puentes sólidos, auditables y de mutuo beneficio entre el sector público, la empresa privada, los comerciantes y las fundaciones.</p></div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 04 · ESTACIONES ═══════════════════ -->
+<section class="section section--cream" id="estaciones">
+  <div class="watermark">04</div>
+  <div class="section-head reveal">
+    <div class="section-kicker">04 · Estaciones de Diversión</div>
+    <h2>Un circuito de <em>alegría navideña</em></h2>
+    <p class="section-lead">Seis estaciones distribuidas a lo largo del recorrido cerrado garantizan diversión continua para todos los niños y niñas.</p>
+  </div>
+  <div class="specialties">
+    <div class="spec-card reveal"><div class="sp-icon">🤸</div><h4>Trampolines</h4><p>Estaciones de salto con trampolines seguros y supervisados, con personal de apoyo permanente.</p><span class="sp-count">2 estaciones</span></div>
+    <div class="spec-card reveal d1"><div class="sp-icon">🏰</div><h4>Colchones Inflables</h4><p>Castillos y colchones inflables de distintos tamaños para saltar, deslizarse y jugar sin parar.</p><span class="sp-count">3 estaciones</span></div>
+    <div class="spec-card reveal d2"><div class="sp-icon">🌭</div><h4>Perros Calenteros</h4><p>Punto de alimentación con perros calientes frescos para los niños y sus representantes.</p><span class="sp-count">+300 unidades</span></div>
+    <div class="spec-card reveal d3"><div class="sp-icon">🍦</div><h4>Puestos de Helados</h4><p>Estaciones de helados variados para refrescar y endulzar la jornada navideña.</p><span class="sp-count">+300 unidades</span></div>
+    <div class="spec-card reveal"><div class="sp-icon">🎉</div><h4>Cotillones</h4><p>Entrega de cotillones navideños sorpresa para cada niño inscrito en la patinata.</p><span class="sp-count">+250 cotillones</span></div>
+    <div class="spec-card reveal d1"><div class="sp-icon">🎤</div><h4>Animación en Vivo</h4><p>Actividades lúdicas, juegos, concursos, música y baile conducidos por un animador profesional.</p><span class="sp-count">Tarima central</span></div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 05 · ESTRUCTURA ═══════════════════ -->
+<section class="section section--white" id="estructura">
+  <div class="watermark">05</div>
+  <div class="section-head reveal">
+    <div class="section-kicker">05 · Estructura General</div>
+    <h2>Una jornada en <em>tres fases</em></h2>
+    <p class="section-lead">Planificación, ejecución y cierre para garantizar un evento seguro, fluido y memorable.</p>
+  </div>
+  <div class="phases">
+    <div class="phase reveal"><div class="ph-num">I</div><h4>Convocatoria y Pre-Evento</h4><p>Difusión comunitaria, censo de niños participantes, coordinación con líderes del sector, gestión de permisos de cierre de calle y organización logística de las estaciones.</p><div class="ph-line"></div></div>
+    <div class="phase reveal d1"><div class="ph-num">II</div><h4>Patinata Navideña</h4><p>Cierre controlado de la vía, apertura del circuito, recorrido de patinata y activación simultánea de las estaciones recreativas, de alimentación y la tarima de animación.</p><div class="ph-line"></div></div>
+    <div class="phase reveal d2"><div class="ph-num">III</div><h4>Cierre y Entrega</h4><p>Entrega de cotillones, rifas y sorteos, agradecimientos a aliados, foto institucional y desmovilización ordenada del espacio.</p><div class="ph-line"></div></div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 06 · PROGRAMA ═══════════════════ -->
+<section class="section section--cream" id="agenda">
+  <div class="watermark">06</div>
+  <div class="section-head reveal">
+    <div class="section-kicker">06 · Programa de la Patinata</div>
+    <h2>Agenda de la <em>jornada navideña</em></h2>
+    <p class="section-lead">Sector Popular <span class="editable">Bello Campo</span> · Sábado 19 de diciembre de 2026 · Horario estimado: 9:00 AM – 2:00 PM.</p>
+  </div>
+  <div class="agenda">
+    <div class="agenda-item reveal"><div class="agenda-time">07:00 – 09:00</div><div class="agenda-body"><h4>Montaje y Cierre de Calle</h4><p>Cierre controlado de la vía en ambos extremos, instalación de estaciones recreativas, tarima de animación, puntos de alimentación, decoración navideña y señalización.</p></div></div>
+    <div class="agenda-item reveal"><div class="agenda-time">09:00 – 09:30</div><div class="agenda-body"><h4>Recepción y Registro</h4><p>Bienvenida de los niños y sus representantes, registro de participantes, entrega de pulseras de identificación y organización del circuito.</p></div></div>
+    <div class="agenda-item reveal"><div class="agenda-time">09:30 – 10:00</div><div class="agenda-body"><h4>Apertura Institucional</h4><p>Palabras de la concejal Yolanda Rivas y la Comisión Permanente de Participación Ciudadana, bendición navideña y apertura oficial del circuito de la patinata.</p></div></div>
+    <div class="agenda-item reveal"><div class="agenda-time">10:00 – 13:00</div><div class="agenda-body"><h4>Patinata Libre y Estaciones</h4><p>Recorrido de patinata por el circuito cerrado con activación simultánea de trampolines, colchones inflables, puestos de helados y perros calenteros.</p></div></div>
+    <div class="agenda-item reveal"><div class="agenda-time">10:30 – 11:00</div><div class="agenda-body"><h4>Show del Animador · Bloque 1</h4><p>Actividades lúdicas, juegos grupales, concursos y música navideña en la tarima central, con participación de los niños.</p></div></div>
+    <div class="agenda-item reveal"><div class="agenda-time">11:30 – 12:00</div><div class="agenda-body"><h4>Show del Animador · Bloque 2</h4><p>Dinámicas de integración, baile, competencias recreativas y sorpresas para los niños participantes.</p></div></div>
+    <div class="agenda-item reveal"><div class="agenda-time">12:00 – 12:30</div><div class="agenda-body"><h4>Entrega de Cotillones</h4><p>Distribución de cotillones navideños a todos los niños inscritos, acompañada de música y ambiente festivo.</p></div></div>
+    <div class="agenda-item reveal"><div class="agenda-time">12:30 – 13:00</div><div class="agenda-body"><h4>Rifa, Cierre y Despedida</h4><p>Sorteos y rifas entre los participantes, agradecimientos a aliados y colaboradores, foto institucional y desmovilización ordenada.</p></div></div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 07 · GALERÍA ═══════════════════ -->
+<section class="section section--dark" id="galeria">
+  <div class="watermark">07</div>
+  <div class="orb orb-1"></div>
+  <div class="section-head reveal">
+    <div class="section-kicker" style="color:var(--gold-bright)">07 · Galería Visual</div>
+    <h2>Memoria en <em style="color:var(--gold-bright)">imágenes</em></h2>
+    <p class="section-lead">Un registro de la alegría, el juego y la celebración que definen esta jornada navideña.</p>
+  </div>
+  <div class="gallery reveal d1">
+    <div class="gallery-grid gallery-grid--3">
+      <div class="g-item"><img data-base="assets/foto-1" alt="Patinata navideña"></div>
+      <div class="g-item"><img data-base="assets/foto-2" alt="Estaciones recreativas"></div>
+      <div class="g-item"><img data-base="assets/foto-3" alt="Celebración comunitaria"></div>
+     </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 08 · IMPACTO ═══════════════════ -->
+<section class="section section--pine" id="impacto">
+  <div class="watermark">08</div>
+  <div class="orb orb-2"></div>
+  <div class="section-head reveal">
+    <div class="section-kicker" style="color:var(--gold-bright)">08 · Alcance e Impacto</div>
+    <h2>Cifras <em style="color:var(--gold-bright)">estimadas</em> de la patinata</h2>
+    <p class="section-lead">Proyección operativa sujeta a confirmación según el censo comunitario y la capacidad del circuito.</p>
+  </div>
+  <div class="stats">
+    <div class="stat reveal"><div class="s-num">+400</div><div class="s-label">Asistentes totales</div><div class="s-est">*cifra estimada</div></div>
+    <div class="stat reveal d1"><div class="s-num">+200</div><div class="s-label">Niños y niñas</div><div class="s-est">*cifra estimada</div></div>
+    <div class="stat reveal d2"><div class="s-num">6</div><div class="s-label">Estaciones de diversión</div></div>
+    <div class="stat reveal d3"><div class="s-num">+300</div><div class="s-label">Refrigerios entregados</div><div class="s-est">*perros calientes + helados</div></div>
+    <div class="stat reveal d2"><div class="s-num">+250</div><div class="s-label">Cotillones navideños</div><div class="s-est">*cifra estimada</div></div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 09 · MÉTODOS DE PARTICIPACIÓN ═══════════════════ -->
+<section class="section section--white" id="participacion">
+  <div class="watermark">09</div>
+  <div class="section-head reveal">
+    <div class="section-kicker">09 · Métodos de Participación</div>
+    <h2>Tres formas de <em>sumarse</em></h2>
+    <p class="section-lead">Invitamos a instituciones públicas, privadas, comerciantes y comunidad a ser parte de esta Navidad inolvidable.</p>
+  </div>
+  <div class="methods">
+    <div class="method reveal"><div class="m-icon">🏪</div><h4>Stands</h4><p>Espacios institucionales y comerciales para aliados durante la patinata, con interacción directa con las familias y los niños asistentes.</p><span class="m-tag">Presencia en el evento</span></div>
+    <div class="method reveal d1"><div class="m-icon">🎁</div><h4>Donativos</h4><p>Contribuciones financieras o aportes en especie: cotillones, juguetes, perros calientes, helados, bebidas, insumos recreativos y decoración.</p><span class="m-tag">Aportes no monetarios</span></div>
+    <div class="method reveal d2"><div class="m-icon">🤝</div><h4>Patrocinios</h4><p>Alianzas estratégicas con visibilidad de marca, reconocimiento público institucional y beneficios exclusivos para los patrocinadores.</p><span class="m-tag">Alianza estratégica</span></div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 10 · PROPUESTA DE ALIANZA ═══════════════════ -->
+<section class="section section--cream" id="alianza">
+  <div class="watermark">10</div>
+  <div class="section-head reveal">
+    <div class="section-kicker">10 · Propuesta de Alianza</div>
+    <h2>Modalidades de <em>contribución</em></h2>
+    <p class="section-lead">Buscamos aliados estratégicos en las siguientes modalidades, las cuales pueden ser cubiertas mediante donaciones financieras o aportes en especie (Aportes No Monetarios).</p>
+  </div>
+  <div class="alliance">
+    <div class="alliance-card reveal"><div class="a-icon">🎁</div><h4>Cotillones y Juguetes</h4><p>Donación de cotillones navideños, juguetes, sorpresas y obsequios para los niños participantes de la patinata.</p><span class="a-type">Especie</span></div>
+    <div class="alliance-card reveal d1"><div class="a-icon">🌭</div><h4>Alimentación y Refrigerios</h4><p>Patrocinio de perros calientes, helados, bebidas, agua y refrigerios para los niños, familias y equipo de trabajo.</p><span class="a-type">Especie / Financiero</span></div>
+    <div class="alliance-card reveal d2"><div class="a-icon">🤸</div><h4>Estaciones Recreativas</h4><p>Financiamiento o préstamo de trampolines, colchones inflables, juegos y equipos recreativos con personal de supervisión.</p><span class="a-type">Especie / Financiero</span></div>
+    <div class="alliance-card reveal d3"><div class="a-icon">🎤</div><h4>Animación y Tarima</h4><p>Apoyo para el animador profesional, equipo de sonido, tarima, música y actividades lúdicas en vivo.</p><span class="a-type">Financiero / Especie</span></div>
+    <div class="alliance-card reveal d2"><div class="a-icon">🎄</div><h4>Decoración Navideña</h4><p>Donación de luces, guirnaldas, árboles navideños, pendones y ambientación temática del circuito.</p><span class="a-type">Especie</span></div>
+    <div class="alliance-card reveal d3"><div class="a-icon">📢</div><h4>Difusión y Campaña</h4><p>Respaldo a la campaña comunicacional para garantizar la asistencia masiva de las familias del sector y comunidades aledañas.</p><span class="a-type">Financiero / Especie</span></div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 11 · BENEFICIOS ═══════════════════ -->
+<section class="section section--white" id="beneficios">
+  <div class="watermark">11</div>
+  <div class="section-head reveal">
+    <div class="section-kicker">11 · Beneficios e Impacto de Marca</div>
+    <h2>Retorno para <em>nuestros aliados</em></h2>
+  </div>
+  <div class="benefits">
+    <div class="benefit benefit--featured reveal"><span class="b-dot"></span><div><h4>Mención Especial</h4><p>Mención especial y destacada de la marca aliada durante la apertura, el cierre y en todos los actos públicos de la patinata navideña, así como en las palabras de la Comisión.</p></div></div>
+    <div class="benefit benefit--featured reveal d1"><span class="b-dot"></span><div><h4>Reconocimiento Público Institucional</h4><p>Reconocimiento formal y público por parte del Concejo Municipal de Chacao, con entrega de distinción a los aliados estratégicos de la jornada.</p></div></div>
+    <div class="benefit benefit--featured reveal d2"><span class="b-dot"></span><div><h4>Asistencia con Trámites Municipales</h4><p>Acompañamiento y orientación preferencial en trámites administrativos ante el Concejo Municipal y las instancias correspondientes.</p></div></div>
+    <div class="benefit reveal"><span class="b-dot"></span><div><h4>Presencia en campaña oficial</h4><p>Inclusión del logotipo en toda la campaña digital e impresa de la patinata: flyers, banners, redes sociales y material promocional.</p></div></div>
+    <div class="benefit reveal d1"><span class="b-dot"></span><div><h4>Visibilidad en el circuito</h4><p>Presencia destacada con pendones y backings a lo largo del recorrido cerrado y en la tarima de animación, con mención en notas de prensa institucionales.</p></div></div>
+    <div class="benefit reveal d2"><span class="b-dot"></span><div><h4>Espacio de stand</h4><p>Disposición de un espacio de stand comercial o institucional durante la patinata, con interacción directa con las familias asistentes.</p></div></div>
+    <div class="benefit reveal d3"><span class="b-dot"></span><div><h4>Padrinazgo de estación</h4><p>Apadrinar una estación específica (ej. "Castillo Inflable patrocinado por Empresa X"), con presencia en la señalización y mención durante la jornada.</p></div></div>
+    <div class="benefit reveal d2"><span class="b-dot"></span><div><h4>Contenido en redes sociales</h4><p>Inclusión del logotipo en el bloque de agradecimientos y publicaciones destacadas en las redes oficiales del Concejo Municipal.</p></div></div>
+    <div class="benefit reveal d3"><span class="b-dot"></span><div><h4>Memoria fotográfica y audiovisual</h4><p>Inclusión en la memoria oficial del evento y acceso al material audiovisual para la comunicación de RSE propia de la marca.</p></div></div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 12 · PROTOCOLO ═══════════════════ -->
+<section class="section section--cream" id="protocolo">
+  <div class="watermark">12</div>
+  <div class="section-head reveal">
+    <div class="section-kicker">12 · Protocolo de Seguridad y Logística</div>
+    <h2>Un circuito <em>cerrado y seguro</em></h2>
+  </div>
+  <div class="protocol">
+    <div class="proto-card reveal"><span class="pc-num">/ 01</span><h4>Cierre Controlado de Vía</h4><p>Cierre de la calle en ambos extremos del sector con barreras, señalización y personal de control. Acceso exclusivo para niños con representantes, comisión y aliados.</p></div>
+    <div class="proto-card reveal d1"><span class="pc-num">/ 02</span><h4>Registro e Identificación</h4><p>Registro de participantes, entrega de pulseras de identificación a los niños y control de ingreso de representantes.</p></div>
+    <div class="proto-card reveal d2"><span class="pc-num">/ 03</span><h4>Supervisión de Estaciones</h4><p>Personal de apoyo permanente en trampolines, colchones inflables y puntos de alimentación, con protocolos de uso seguro.</p></div>
+    <div class="proto-card reveal d3"><span class="pc-num">/ 04</span><h4>Cierre y Desmovilización</h4><p>Desalojo ordenado, limpieza del espacio, retiro de estaciones y reapertura de la vía en óptimas condiciones.</p></div>
+  </div>
+  <div class="proto-alert reveal">
+    <div class="pa-icon">🩹</div>
+    <p><strong>Seguridad e integridad:</strong> se contará con un punto de primeros auxilios con kit básico, coordinación con Protección Civil y personal de seguridad municipal para el resguardo de los niños y sus representantes durante toda la jornada.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════ 13 · AGRADECIMIENTO ═══════════════════ -->
+<section class="section section--white" id="agradecimiento">
+  <div class="watermark">13</div>
+  <div class="thanks reveal">
+    <div class="t-icon">🎄</div>
+    <h2>Palabras de la Comisión</h2>
+    <div class="t-sub">Un regalo de Navidad para nuestra infancia</div>
+    <p>Desde la <strong>Comisión Permanente de Participación Ciudadana</strong>, presidida por la concejal <strong>Yolanda Rivas</strong>, expresamos nuestro más profundo agradecimiento a todos los aliados, comerciantes, fundaciones, voluntarios y vecinos que hacen posible "Alegría Navideña". Cada sonrisa de un niño sobre sus patines, cada grito de alegría en un castillo inflable y cada cotillón entregado es el resultado de un esfuerzo colectivo que nos llena de orgullo.</p>
+    <p>A las empresas y comercios que donan cotillones, refrigerios y estaciones recreativas: su generosidad se convierte directamente en felicidad para cientos de niños. A los líderes comunitarios y vecinos del sector: gracias por abrir sus calles y sus corazones a esta celebración. A nuestro equipo de logística y voluntarios: ustedes hacen magia con cada detalle.</p>
+    <p>Esta patinata no es solo un evento recreativo; es una <strong>declaración de principios</strong>: la infancia de nuestros sectores populares merece alegría, juego y celebración. Desde Chacao demostramos que cuando instituciones, sector privado y comunidad trabajan unidos, transformamos una calle en un espacio de felicidad y creamos recuerdos que durarán toda la vida.</p>
+    <p><strong>¡Regalemos juntos una Navidad inolvidable a nuestros niños y niñas!</strong></p>
+    <div class="thanks-sign">
+      <div class="ts-name">Yolanda Rivas</div>
+      <div class="ts-role">Presidenta de la Comisión Permanente de Participación Ciudadana</div>
+      <div class="ts-org">Concejo Municipal de Chacao</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ CONTRAPORTADA ═══════════════════ -->
+<footer class="back-cover">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <h2>Una calle cerrada al tráfico y abierta a la alegría es el mejor regalo de Navidad para <em>la infancia de Chacao</em>.</h2>
+  <div class="bc-phrase">Este dossier es una invitación abierta a construir juntos una jornada que llene de sonrisas nuestro municipio.</div>
+
+  <div class="contact" style="margin-top:56px">
+    <div class="contact-card"><div class="cc-icon">📍</div><div class="cc-label">Sede</div><div class="cc-value">Sector Popular Bello Campo · Chacao</div></div>
+    <div class="contact-card"><div class="cc-icon">📅</div><div class="cc-label">Fecha</div><div class="cc-value">19 de Diciembre de 2026</div></div>
+    <div class="contact-card"><div class="cc-icon">📞</div><div class="cc-label">Teléfono / WhatsApp</div><div class="cc-value">0412-3740055</div></div>
+    <div class="contact-card"><div class="cc-icon">✉️</div><div class="cc-label">Correo electrónico</div><div class="cc-value">entornoinstitucional.cpcchacao@gmail.com</div></div>
+  </div>
+
+  <div class="bc-logos">
+    <div class="logo-slot"><img data-base="assets/logo-1" alt="Comisión"></div>
+    <div class="logo-slot"><img data-base="assets/logo-2" alt="Concejal"></div>
+  </div>
+  <div class="bc-org">
+    Comisión Permanente de Participación Ciudadana<br>
+    Concejo Municipal de Chacao<br>
+    Alegría Navideña · Patinata · 2026
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════
+     🖼️ CARGADOR AUTOMÁTICO DE IMÁGENES
+════════════════════════════════════════════════════════ -->
+<script>
+(function(){
+  var EXT = ['png','jpg','jpeg','webp','gif','PNG','JPG','JPEG','WEBP','GIF'];
+  function cargar(img){
+    var base = img.getAttribute('data-base');
+    if(!base || img.getAttribute('data-procesado')) return;
+    img.setAttribute('data-procesado','true');
+    var i = 0;
+    img.onerror = function(){
+      i++;
+      if(i < EXT.length){ img.src = base + '.' + EXT[i]; }
+      else { img.onerror = null; fallo(img, base); }
+    };
+    img.src = base + '.' + EXT[0];
+  }
+  function fallo(img, base){
+    if(img.hasAttribute('data-optional')){ img.style.display = 'none'; return; }
+    var p = img.parentElement;
+    if(p){
+      p.classList.add('img-error-state');
+      p.innerHTML = '<div class="img-error-msg">❌ Imagen no encontrada<b>' + base + '.[ext]</b><span>Colócala en la carpeta assets</span></div>';
+    }
+  }
+  function iniciar(){
+    var imgs = document.querySelectorAll('img[data-base]');
+    for(var k=0;k<imgs.length;k++){ cargar(imgs[k]); }
+  }
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', iniciar); }
+  else { iniciar(); }
+})();
+</script>
+
+<!-- Barra de progreso + animaciones -->
+<script>
+const progress=document.getElementById('progress');
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  progress.style.width=pct+'%';
+},{passive:true});
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
